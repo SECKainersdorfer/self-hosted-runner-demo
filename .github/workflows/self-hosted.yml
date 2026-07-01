@@ -1,0 +1,22 @@
+name: Self-hosted runner test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: [self-hosted, local]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show where this is actually running
+        run: |
+          echo "hostname: $(hostname)"
+          echo "uname: $(uname -a)"
+          echo "runner name: $RUNNER_NAME"
+          whoami
+
+      - name: Prove filesystem access to the real Mac
+        run: ls -la /Users/raffael.kainersdorfer | head -5
